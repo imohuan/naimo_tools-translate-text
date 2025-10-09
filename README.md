@@ -128,9 +128,23 @@ translate-plugin/
    ```
 
 5. **类型检查**
+
    ```bash
    npm run type-check
    ```
+
+6. **部署到 build 分支**
+
+   ```bash
+   npm run deploy
+   ```
+
+   该命令会自动完成以下操作：
+
+   - 执行完整的项目打包
+   - 删除远程 build 分支的所有内容
+   - 将 dist 目录的内容推送到 build 分支
+   - 自动生成部署提交信息（包含版本号和原始提交信息）
 
 ### API 说明
 

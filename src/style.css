@@ -34,10 +34,10 @@ body {
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0 20px;
   background: #fafafa;
   border-bottom: 1px solid #e0e0e0;
+  gap: 20px;
 }
 
 .output-section {
@@ -63,6 +63,13 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
 }
 
 .language-select {
@@ -129,22 +136,20 @@ body {
 /* ==================== 按钮样式 ==================== */
 
 .translate-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   background: #4285f4;
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 8px 16px;
+  padding: 8px 20px;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   gap: 6px;
-  min-width: 60px;
+  min-width: 70px;
   justify-content: center;
+  white-space: nowrap;
 }
 
 .translate-btn:hover {
@@ -181,26 +186,29 @@ body {
 }
 
 .copy-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   background: #10b981;
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 8px 16px;
+  padding: 8px 20px;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  white-space: nowrap;
 }
 
 .copy-btn:hover {
   background: #059669;
 }
 
-.copy-btn.show {
-  display: block;
+.copy-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* ==================== 输出区域 ==================== */
@@ -278,16 +286,42 @@ body {
   .middle-section {
     height: auto;
     padding: 10px;
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .translate-logo {
+    font-size: 14px;
+  }
+
+  .translate-logo svg {
+    width: 20px;
+    height: 20px;
   }
 
   .language-controls {
-    width: 100%;
-    justify-content: space-between;
+    gap: 6px;
   }
 
   .language-select {
-    flex: 1;
+    min-width: 60px;
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .swap-btn {
+    font-size: 14px;
+    padding: 2px;
+  }
+
+  .action-buttons {
+    gap: 8px;
+  }
+
+  .translate-btn,
+  .copy-btn {
+    font-size: 13px;
+    padding: 6px 16px;
+    min-width: 60px;
   }
 }

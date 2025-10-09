@@ -229,15 +229,15 @@ async function translate(): Promise<void> {
 
       if (result.success) {
         displayResult(result.translatedText!);
-        copyBtn.classList.add('show');
+        copyBtn.disabled = false;
 
         // 使用 Naimo API 显示通知
-        if (naimo && naimo.system) {
-          await naimo.system.notify('翻译完成', '翻译成功');
-        }
+        // if (naimo && naimo.system) {
+        //   await naimo.system.notify('翻译完成', '翻译成功');
+        // }
       } else {
         showError(result.error || '翻译失败');
-        copyBtn.classList.remove('show');
+        copyBtn.disabled = true;
       }
     } else {
       showError('翻译功能未正确加载，请检查插件配置');
@@ -312,7 +312,7 @@ function clearAll(): void {
   sourceText.value = '';
   targetText.innerHTML = '<div class="output-placeholder">翻译结果将显示在这里...</div>';
   targetText.classList.add('output-placeholder');
-  copyBtn.classList.remove('show');
+  copyBtn.disabled = true;
   updateCharCount();
   clearMessages();
 }

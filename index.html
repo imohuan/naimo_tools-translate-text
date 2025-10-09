@@ -13,10 +13,6 @@
     <div class="input-section">
       <div class="text-input">
         <textarea id="sourceText" class="text-area" placeholder="请输入要翻译的文本..." maxlength="5000"></textarea>
-        <button id="translateBtn" class="translate-btn">
-          <div class="btn-spinner"></div>
-          <span>翻译</span>
-        </button>
         <div class="char-count" id="sourceCharCount">0 / 5000</div>
       </div>
     </div>
@@ -68,15 +64,20 @@
           <option value="vi">越南语</option>
         </select>
       </div>
+
+      <div class="action-buttons">
+        <button id="translateBtn" class="translate-btn">
+          <div class="btn-spinner"></div>
+          <span>翻译</span>
+        </button>
+        <button id="copyBtn" class="copy-btn" disabled>复制</button>
+      </div>
     </div>
 
     <!-- 下方输出区域 -->
     <div class="output-section">
-      <div id="targetTextContainer" style="position: relative; flex: 1; display: flex; flex-direction: column;">
-        <div id="targetText" class="output-area">
-          <div class="output-placeholder">翻译结果将显示在这里...</div>
-        </div>
-        <button id="copyBtn" class="copy-btn">复制</button>
+      <div id="targetText" class="output-area">
+        <div class="output-placeholder">翻译结果将显示在这里...</div>
       </div>
     </div>
   </div>
