@@ -3,12 +3,14 @@
  * 1. preloadBuilderPlugin - 打包 preload.ts
  * 2. manifestCopyPlugin - 复制 manifest.json 到 dist
  * 3. devWatchPlugin - dev 模式下监听文件变化并通知
+ * 4. copyFolderPlugin - 构建完成后复制文件夹到剪贴板
  */
 
 import { build, Plugin, ViteDevServer, InlineConfig } from 'vite';
 import { resolve } from 'path';
-import { copyFileSync, existsSync, mkdirSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
+import { execSync } from 'child_process';
 import preloadConfig from './vite.config.preloads';
 
 /**
@@ -141,6 +143,29 @@ export interface ManifestCopyPluginOptions {
 }
 
 /**
+ * 修改 manifest.json 的 main 字段（开发模式专用）
+ */
+function modifyManifestForDev(destPath: string): void {
+  try {
+    if (!existsSync(destPath)) {
+      console.warn(`⚠️  manifest.json 不存在: ${destPath}`);
+      return;
+    }
+
+    const content = readFileSync(destPath, 'utf-8');
+    const manifest = JSON.parse(content);
+
+    // 修改 main 字段为开发服务器地址
+    manifest.main = 'http://localhost:3000/';
+
+    writeFileSync(destPath, JSON.stringify(manifest, null, 2), 'utf-8');
+    console.log('🔧 开发模式：已将 manifest.json 的 main 设置为 http://localhost:3000/');
+  } catch (error) {
+    console.error('❌ 修改 manifest.json 失败:', error);
+  }
+}
+
+/**
  * Vite 插件：Manifest 复制器
  * 用于在构建时复制 manifest.json 到 dist 目录
  */
@@ -154,6 +179,11 @@ export function manifestCopyPlugin(
 
   return {
     name: 'vite-plugin-manifest-copy',
+
+    configureServer() {
+      // 如果是开发模式，修改 manifest.json
+      modifyManifestForDev(dest);
+    },
 
     closeBundle() {
       // 在输出文件后复制 manifest.json
@@ -232,4 +262,76 @@ export function devWatchPlugin(
       });
     }
   };
+}
+
+
+// ===========================================
+// 插件 4: 复制文件夹到剪贴板插件
+// ===========================================
+export interface CopyFolderPluginOptions {
+  /** 要复制到剪贴板的文件夹路径，默认为 ./dist */
+  folderPath?: string;
+}
+
+/**
+ * Vite 插件：复制文件夹到剪贴板
+ * 用于在构建完成后将指定文件夹复制到系统剪贴板（仅支持 Windows）
+ */
+export function copyFolderPlugin(
+  options: CopyFolderPluginOptions = {}
+): Plugin {
+  const {
+    folderPath = resolve(__dirname, './dist'),
+  } = options;
+
+  return {
+    name: 'vite-plugin-copy-folder',
+
+    buildStart() {
+      console.log('📋 准备复制文件夹到剪贴板...');
+      copyFolderToClipboard(folderPath);
+    }
+  };
+}
+
+/**
+ * 复制文件夹到剪贴板中（仅支持 Windows）
+ * 使用 Node.js 内置模块，无需第三方依赖
+ */
+export function copyFolderToClipboard(folderPath: string): void {
+  try {
+    // 检查文件夹是否存在
+    if (!existsSync(folderPath)) {
+      console.error(`❌ 文件夹不存在: ${folderPath}`);
+      return;
+    }
+
+    // 是否是window
+    if (process.platform !== 'win32') {
+      console.warn('⚠️  此功能仅支持 Windows 系统');
+      return;
+    }
+
+
+    // 转换为绝对路径并规范化路径分隔符
+    const absolutePath = resolve(folderPath).replace(/\//g, '\\');
+
+    // 使用 PowerShell 命令将文件夹路径复制到剪贴板
+    // 创建一个 StringCollection 对象并设置到剪贴板
+    const psScript = `
+      Add-Type -AssemblyName System.Windows.Forms;
+      $files = New-Object System.Collections.Specialized.StringCollection;
+      $files.Add('${absolutePath}');
+      [System.Windows.Forms.Clipboard]::SetFileDropList($files);
+    `;
+
+    execSync(`powershell -Command "${psScript.replace(/\n/g, ' ')}"`, {
+      encoding: 'utf-8',
+      windowsHide: true
+    });
+
+    console.log(`✅ 已将文件夹复制到剪贴板: ${absolutePath}`);
+  } catch (error) {
+    console.error('❌ 复制文件夹到剪贴板失败:', error);
+  }
 }

@@ -1,27 +1,25 @@
 {
   "id": "translate-plugin",
   "name": "智能翻译",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "author": "Naimo Tools",
   "icon": "./1.ico",
   "description": "基于腾讯云的智能翻译插件，支持多语言互译",
   "category": "ai_artificial_intelligence",
   "enabled": true,
-  "main1": "./index.html",
-  "main": "http://localhost:3000/",
+  "main": "./index.html",
   "preload": "./preload.js",
   "feature": [
     {
       "path": "text-translate",
-      "name": "翻译",
+      "name": "翻译11",
       "type": "text",
       "icon": "./2.ico",
       "description": "智能文本翻译工具",
       "weight": 100,
       "anonymousSearchFields": [
         "翻译",
-        "translate",
-        "fy"
+        "translate"
       ],
       "minLength": 1,
       "maxLength": 5000,

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import { preloadBuilderPlugin, manifestCopyPlugin, devWatchPlugin } from './vite-plugins';
+import { preloadBuilderPlugin, manifestCopyPlugin, devWatchPlugin, copyFolderPlugin } from './vite-plugins';
 
 export default defineConfig({
   // 基础配置
@@ -11,7 +11,10 @@ export default defineConfig({
   plugins: [
     preloadBuilderPlugin(),      // 插件1: 打包 preload.ts
     manifestCopyPlugin(),         // 插件2: 复制 manifest.json
-    devWatchPlugin()              // 插件3: dev 模式监听和通知
+    devWatchPlugin(),             // 插件3: dev 模式监听和通知
+    copyFolderPlugin({            // 插件4: 复制文件夹到剪贴板
+      folderPath: resolve(__dirname, './dist'),
+    })
   ],
 
   // 构建配置
