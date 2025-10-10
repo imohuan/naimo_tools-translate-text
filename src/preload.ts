@@ -265,7 +265,7 @@ contextBridge.exposeInMainWorld('translatePluginAPI', translatePluginAPI);
  * 导出功能处理器
  * 类型定义来自 naimo.d.ts
  */
-const handlers: import('../typings/naimo').PluginExports = {
+const handlers = {
   // 文本翻译功能
   "text-translate": {
     onEnter: async (params: any) => {
@@ -312,3 +312,5 @@ declare global {
     translatePluginAPI: TranslatePluginAPI;
   }
 }
+
+

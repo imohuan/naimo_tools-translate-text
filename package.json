@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run type-check && npm run build:main && npm run build:preload",
-    "build:main": "vite build",
-    "build:preload": "node scripts/build-preload.js && node scripts/copy-dir.js E:/Code/Git/naimo_tools/plugins-test/translate-plugin/",
+    "build": "vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "deploy": "node scripts/deploy-to-build.js"

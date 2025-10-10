@@ -1,17 +1,25 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { preloadBuilderPlugin, manifestCopyPlugin, devWatchPlugin } from './vite-plugins';
 
 export default defineConfig({
   // 基础配置
   base: './',
   publicDir: "pulbic",
 
+  // 插件配置
+  plugins: [
+    preloadBuilderPlugin(),      // 插件1: 打包 preload.ts
+    manifestCopyPlugin(),         // 插件2: 复制 manifest.json
+    devWatchPlugin()              // 插件3: dev 模式监听和通知
+  ],
+
   // 构建配置
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
-    sourcemap: true,
+    sourcemap: false,
     // Rollup 配置
     rollupOptions: {
       input: {

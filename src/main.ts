@@ -3,6 +3,43 @@
 import './style.css';
 
 // ==================== 类型定义 ====================
+if (import.meta.hot) {
+
+  // import.meta.hot.accept(async (module) => {
+  //   console.log('文件已更新，开始执行自定义逻辑...', module);
+
+  //   // 触发 preload 热更新
+  //   await window.naimo.hot()
+
+  //   setTimeout(() => {
+  //     console.log('自定义逻辑执行完毕。');
+  //     import.meta.hot!.invalidate()
+  //   }, 0);
+  // })
+
+  // 监听 preload 文件变化事件
+  import.meta.hot.on('preload-changed', async (data) => {
+    console.log('📝 检测到 preload 变化:', data);
+    // 触发 preload 构建
+    console.log('🔨 正在触发 preload 构建...');
+    try {
+      const response = await fetch('/__preload_build');
+      const result = await response.json();
+      if (result.success) {
+        console.log('✅ Preload 构建完成');
+        // 构建成功后，触发热重载
+        await window.naimo.hot()
+        console.log('🔄 Preload 热重载完成');
+        location.reload()
+      } else {
+        console.error('❌ Preload 构建失败');
+      }
+    } catch (error) {
+      console.error('❌ 触发 preload 构建失败:', error);
+    }
+  })
+}
+
 
 /**
  * Naimo API 类型
