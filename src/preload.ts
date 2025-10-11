@@ -271,7 +271,6 @@ const handlers = {
     onEnter: async (params: any) => {
       try {
         console.log('翻译功能被触发，参数:', params);
-
         // 功能已在 UI 中实现
         // 此处 onEnter 主要用于日志记录
       } catch (error) {

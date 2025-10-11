@@ -1,7 +1,7 @@
 {
   "id": "translate-plugin",
   "name": "智能翻译",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "author": "Naimo Tools",
   "icon": "./1.ico",
   "description": "基于腾讯云的智能翻译插件，支持多语言互译",
@@ -12,7 +12,7 @@
   "feature": [
     {
       "path": "text-translate",
-      "name": "翻译11",
+      "name": "翻译",
       "type": "text",
       "icon": "./2.ico",
       "description": "智能文本翻译工具",
@@ -23,19 +23,6 @@
       ],
       "minLength": 1,
       "maxLength": 5000,
-      "singleton": true,
-      "lifecycleType": "reuse"
-    },
-    {
-      "path": "quick-translate",
-      "name": "快速翻译",
-      "type": "text",
-      "icon": "./2.ico",
-      "description": "快速翻译输入的文本",
-      "weight": 90,
-      "minLength": 1,
-      "maxLength": 5000,
-      "notVisibleSearch": true,
       "singleton": true,
       "lifecycleType": "reuse"
     }

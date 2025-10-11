@@ -88,6 +88,19 @@ const sourceCharCount = document.getElementById('sourceCharCount') as HTMLDivEle
 
 // ==================== 初始化 ====================
 
+
+naimo.onEnter(async (params: any) => {
+  console.log('收到参数:', params);
+  // 如果有传入的文本，自动填充并翻译
+  await tryLoadClipboardText();
+  updateCharCount();
+
+  if (params.hotkeyEmit && sourceText.value.trim()) {
+    setTimeout(() => translate(), 100);
+  }
+});
+
+
 /**
  * 应用初始化
  */
@@ -100,23 +113,6 @@ async function initApp(): Promise<void> {
   setupEventListeners();
 
   // 尝试从剪贴板加载文本
-  await tryLoadClipboardText();
-
-  // 使用 window.naimo.onEnter 接收参数
-  if (naimo && naimo.onEnter) {
-    naimo.onEnter(async (params: any) => {
-      console.log('收到参数:', params);
-
-      // 如果有传入的文本，自动填充并翻译
-      if (params && params.text) {
-        sourceText.value = params.text;
-        updateCharCount();
-
-        // 自动开始翻译
-        setTimeout(() => translate(), 300);
-      }
-    });
-  }
 
   naimo.log.info('翻译插件初始化完成');
 }

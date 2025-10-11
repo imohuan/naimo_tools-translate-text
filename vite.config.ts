@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { preloadBuilderPlugin, manifestCopyPlugin, devWatchPlugin, copyFolderPlugin } from './vite-plugins';
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   // 基础配置
@@ -9,6 +10,7 @@ export default defineConfig({
 
   // 插件配置
   plugins: [
+    tailwindcss(),
     preloadBuilderPlugin(),      // 插件1: 打包 preload.ts
     manifestCopyPlugin(),         // 插件2: 复制 manifest.json
     devWatchPlugin(),             // 插件3: dev 模式监听和通知

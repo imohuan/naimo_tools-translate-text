@@ -81,13 +81,6 @@ function copyFile(source: string, dest: string, description?: string): boolean {
       console.warn(`⚠️  源文件不存在: ${source}`);
       return false;
     }
-
-    // 确保目标目录存在
-    const destDir = dirname(dest);
-    if (!existsSync(destDir)) {
-      mkdirSync(destDir, { recursive: true });
-    }
-
     copyFileSync(source, dest);
     const fileName = source.split(/[\\/]/).pop();
     console.log(`✅ 已复制: ${fileName}${description ? ` (${description})` : ''}`);
@@ -145,19 +138,19 @@ export interface ManifestCopyPluginOptions {
 /**
  * 修改 manifest.json 的 main 字段（开发模式专用）
  */
-function modifyManifestForDev(destPath: string): void {
+function modifyManifestForDev(sourcePath: string, destPath: string): void {
   try {
-    if (!existsSync(destPath)) {
-      console.warn(`⚠️  manifest.json 不存在: ${destPath}`);
-      return;
+    const destDir = dirname(destPath);
+    if (!existsSync(destDir)) {
+      mkdirSync(destDir, { recursive: true });
     }
+    copyFileSync(sourcePath, destPath);
+    console.log('📋 已复制 manifest.json 到 dist 目录');
 
     const content = readFileSync(destPath, 'utf-8');
     const manifest = JSON.parse(content);
-
     // 修改 main 字段为开发服务器地址
     manifest.main = 'http://localhost:3000/';
-
     writeFileSync(destPath, JSON.stringify(manifest, null, 2), 'utf-8');
     console.log('🔧 开发模式：已将 manifest.json 的 main 设置为 http://localhost:3000/');
   } catch (error) {
@@ -180,9 +173,13 @@ export function manifestCopyPlugin(
   return {
     name: 'vite-plugin-manifest-copy',
 
-    configureServer() {
-      // 如果是开发模式，修改 manifest.json
-      modifyManifestForDev(dest);
+    configureServer(server: ViteDevServer) {
+      // 如果是开发模式，复制并修改 manifest.json
+      modifyManifestForDev(source, dest);
+      server.watcher.add(source);
+      server.watcher.on('change', async (_file: string) => {
+        modifyManifestForDev(source, dest);
+      })
     },
 
     closeBundle() {
