@@ -3,7 +3,7 @@
   "name": "智能翻译",
   "version": "2.0.4",
   "author": "Naimo Tools",
-  "icon": "./1.ico",
+  "icon": "./ico.png",
   "description": "基于腾讯云的智能翻译插件，支持多语言互译",
   "category": "ai_artificial_intelligence",
   "enabled": true,
@@ -14,7 +14,7 @@
       "path": "text-translate",
       "name": "翻译",
       "type": "text",
-      "icon": "./2.ico",
+      "icon": "./ico.png",
       "description": "智能文本翻译工具",
       "weight": 100,
       "anonymousSearchFields": [
