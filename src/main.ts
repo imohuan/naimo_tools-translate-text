@@ -212,11 +212,6 @@ function setupEventListeners(): void {
       e.preventDefault();
       clearAll();
     }
-
-    // Esc: 隐藏窗口
-    if (e.key === 'Escape') {
-      naimo?.window?.hide();
-    }
   });
 }
 
