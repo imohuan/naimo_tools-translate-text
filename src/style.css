@@ -28,6 +28,8 @@ body {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #e0e0e0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .middle-section {
@@ -44,6 +46,8 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* ==================== Logo 样式 ==================== */
@@ -108,6 +112,9 @@ body {
   flex: 1;
   position: relative;
   padding: 20px;
+  padding-right: 0px;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .text-area {
@@ -115,10 +122,12 @@ body {
   height: 100%;
   border: none;
   resize: none;
+  padding-right: 20e px;
   font-size: 16px;
   line-height: 1.5;
   outline: none;
   font-family: inherit;
+  overflow-y: auto;
 }
 
 .text-area::placeholder {
