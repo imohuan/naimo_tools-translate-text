@@ -28,6 +28,7 @@
         <span>翻译</span>
       </div>
 
+
       <div class="language-controls">
         <select id="sourceLanguage" class="language-select">
           <option value="auto">自动检测</option>
@@ -45,9 +46,7 @@
           <option value="th">泰语</option>
           <option value="vi">越南语</option>
         </select>
-
-        <button id="swapLanguages" class="swap-btn" title="交换语言">⇄</button>
-
+        <span class="language-separator">→</span>
         <select id="targetLanguage" class="language-select">
           <option value="zh">中文</option>
           <option value="en">英语</option>
@@ -65,12 +64,43 @@
         </select>
       </div>
 
+
+      <div class="auto-detect-control" title="自动设置目标语言">
+        <label class="checkbox-label">
+          <input type="checkbox" id="autoDetectTargetToggle" checked>
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-text">自动目标</span>
+        </label>
+      </div>
+
+      <div class="auto-translate-control" title="自动翻译">
+        <label class="checkbox-label">
+          <input type="checkbox" id="autoTranslateToggle" checked>
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-text">自动翻译</span>
+        </label>
+      </div>
+
       <div class="action-buttons">
         <button id="translateBtn" class="translate-btn">
           <div class="btn-spinner"></div>
+          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12.87 15.07L10.33 12.56L10.36 12.53C12.1 10.59 13.34 8.36 14.07 6H17V4H10V2H8V4H1V6H12.17C11.5 7.92 10.44 9.75 9 11.35C8.07 10.32 7.3 9.19 6.69 8H4.69C5.42 9.63 6.42 11.17 7.67 12.56L2.58 17.58L4 19L9 14L12.11 17.11L12.87 15.07ZM18.5 10H16.5L12 22H14L15.12 19H19.87L21 22H23L18.5 10ZM15.88 17L17.5 12.67L19.12 17H15.88Z"
+              fill="currentColor" />
+          </svg>
           <span>翻译</span>
         </button>
-        <button id="copyBtn" class="copy-btn" disabled>复制</button>
+        <button id="copyBtn" class="copy-btn" disabled>
+          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z"
+              fill="currentColor" />
+          </svg>
+          <span>复制</span>
+        </button>
       </div>
     </div>
 

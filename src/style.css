@@ -33,13 +33,14 @@ body {
 }
 
 .middle-section {
-  height: 60px;
+  height: 50px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  background: #fafafa;
+  padding: 0 16px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   border-bottom: 1px solid #e0e0e0;
-  gap: 20px;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .output-section {
@@ -55,10 +56,17 @@ body {
 .translate-logo {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 500;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
   color: #333;
+  padding: 0;
+}
+
+.translate-logo svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
 }
 
 /* ==================== 语言控制 ==================== */
@@ -66,13 +74,112 @@ body {
 .language-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+}
+
+.language-separator {
+  color: #999;
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+}
+
+.auto-detect-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.auto-translate-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 8px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-custom {
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  background-color: white;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-custom:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: 50%;
+  margin-left: -3px;
+  margin-top: -6px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  background-color: #4285f4;
+  border-color: #4285f4;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom:after {
+  display: block;
+}
+
+.checkbox-label:hover .checkbox-custom {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.1);
+}
+
+.checkbox-label input[type="checkbox"]:checked:hover + .checkbox-custom {
+  background-color: #3367d6;
+  border-color: #3367d6;
+}
+
+.checkbox-label input[type="checkbox"]:focus + .checkbox-custom {
+  outline: 2px solid rgba(66, 133, 244, 0.3);
+  outline-offset: 2px;
+}
+
+.checkbox-text {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
 }
 
 .action-buttons {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   margin-left: auto;
 }
 
@@ -80,11 +187,19 @@ body {
   padding: 6px 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 13px;
   background: white;
   color: #333;
   cursor: pointer;
-  min-width: 80px;
+  min-width: 90px;
+  transition: all 0.2s;
+  font-weight: 500;
+  height: 32px;
+}
+
+.language-select:hover {
+  border-color: #4285f4;
+  box-shadow: 0 2px 4px rgba(66, 133, 244, 0.1);
 }
 
 .language-select:focus {
@@ -92,26 +207,12 @@ body {
   border-color: #4285f4;
 }
 
-.swap-btn {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.swap-btn:hover {
-  background: #f0f0f0;
-}
-
 /* ==================== 文本输入区域 ==================== */
 
 .text-input {
   flex: 1;
   position: relative;
-  padding: 20px;
+  padding: 24px;
   padding-right: 0px;
   min-height: 0;
   overflow: hidden;
@@ -122,7 +223,7 @@ body {
   height: 100%;
   border: none;
   resize: none;
-  padding-right: 20e px;
+  padding-right: 20px;
   font-size: 16px;
   line-height: 1.5;
   outline: none;
@@ -136,38 +237,60 @@ body {
 
 .char-count {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: 24px;
+  left: 24px;
   font-size: 12px;
   color: #999;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
 }
 
 /* ==================== 按钮样式 ==================== */
 
 .translate-btn {
-  background: #4285f4;
+  background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%);
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 8px 20px;
-  font-size: 14px;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   gap: 6px;
-  min-width: 70px;
+  min-width: 80px;
   justify-content: center;
   white-space: nowrap;
+  height: 32px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(66, 133, 244, 0.2);
 }
 
 .translate-btn:hover {
-  background: #3367d6;
+  background: linear-gradient(135deg, #3367d6 0%, #2b5fc7 100%);
+  box-shadow: 0 3px 6px rgba(66, 133, 244, 0.3);
+  transform: translateY(-1px);
+}
+
+.translate-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(66, 133, 244, 0.2);
 }
 
 .translate-btn:disabled {
-  background: #ccc;
+  background: #e0e0e0;
   cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.translate-btn .btn-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
 }
 
 .translate-btn .btn-spinner {
@@ -195,41 +318,62 @@ body {
 }
 
 .copy-btn {
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 8px 20px;
-  font-size: 14px;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
+  gap: 6px;
   justify-content: center;
-  min-width: 70px;
+  min-width: 80px;
   white-space: nowrap;
+  height: 32px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
 }
 
 .copy-btn:hover {
-  background: #059669;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 3px 6px rgba(16, 185, 129, 0.3);
+  transform: translateY(-1px);
+}
+
+.copy-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(16, 185, 129, 0.2);
 }
 
 .copy-btn:disabled {
-  background: #ccc;
+  background: #e0e0e0;
   cursor: not-allowed;
   opacity: 0.6;
+  box-shadow: none;
+  transform: none;
+}
+
+.copy-btn .btn-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
 }
 
 /* ==================== 输出区域 ==================== */
 
 .output-area {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
   background: #fafafa;
   color: #333;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.8;
   overflow-y: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .output-placeholder {
@@ -318,13 +462,28 @@ body {
     padding: 4px 8px;
   }
 
-  .swap-btn {
-    font-size: 14px;
-    padding: 2px;
+  .auto-detect-control {
+    margin-left: 0;
+    margin-right: 0;
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .auto-translate-control {
+    margin-left: 0;
+    margin-right: 0;
+    order: 4;
+    width: 100%;
+    justify-content: center;
   }
 
   .action-buttons {
     gap: 8px;
+    margin-left: 0;
+    order: 5;
+    width: 100%;
+    justify-content: center;
   }
 
   .translate-btn,
